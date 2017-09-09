@@ -10,11 +10,26 @@
 #==============================================================================
 import os
 import sys
+import re
+
+class RecoverException(Exception):
+    pass
 
 class RecoverClass:
-    def __init__(self, current_filament, file):
+    def __init__ (self, current_filament, g_file):
+        if not os.path.isfile(g_file):
+            raise RecoverException
+        if self.arg_is_consumed_filament(current_filament) == False:
+            raise RecoverException
+        self.filepath = os.path.abspath(g_file)
         self.filament = current_filament
-        self.file = file
+
+    def arg_is_consumed_filament(self, value):
+        result = re.match(r"^E[0-9]+(\.[0-9]+)?$", value)
+        if(result is None):
+            return False
+        else:
+            return True
 
 def help_usage():
     print "Usage : python {} EXXXX FILE".format(sys.argv[0])
@@ -26,5 +41,10 @@ if __name__ == "__main__":
         help_usage()
         exit(1)
 
+    try:
+        recover = RecoverClass(sys.argv[1], sys.argv[2])
+    except RecoverException as e:
+        print("Cannot start GCode recovering process : wrong arguments")
+        help_usage()
+        exit(1)
     print("Starting recovering Gcode at interrupted step")
-    recover = RecoverClass(sys.argv[1], sys.argv[2])
