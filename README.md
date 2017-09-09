@@ -13,3 +13,5 @@ Since the electrical wiring is quite old in my apartment, my 3D printer often st
 * Start the script passing two parameters : the previously retrieved variable and the original file path.
 
 Example : `python gcode_recover.py E4517.904 ~/USBHolder.gcode`
+
+This call, if successfull, will generate file recovery.gcode wich will be able to restart print at interrupted point
