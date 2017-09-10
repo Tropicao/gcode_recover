@@ -25,7 +25,7 @@ class RecoverClass:
         self.filament = current_filament
 
     def arg_is_consumed_filament(self, value):
-        result = re.match(r"^E[0-9]+(\.[0-9]+)?$", value)
+        result = re.search(r"E[0-9]+(\.[0-9]+)?", value)
         if(result is None):
             return False
         else:
