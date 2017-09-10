@@ -51,7 +51,7 @@ class RecoverClass:
         pattern = re.compile(r'Z[0-9]+(\.[0-9]+)?$')
         with open(self.filepath) as complete_gcode:
             nb_line = 0
-            current_height = ""
+            current_height = "0.200"
             for line in complete_gcode:
                 res = pattern.search(line)
                 if(res):
