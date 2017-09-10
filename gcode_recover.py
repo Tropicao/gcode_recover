@@ -43,9 +43,9 @@ class RecoverClass:
                 else:
                     nb_line = nb_line+1
         if(found == True):
-            return nb_line
+            self.interrupted_line = nb_line
         else:
-            return -1
+            self.interrupted_line = -1
 
     def getHeightAtInterruption(self):
         pattern = re.compile(r'Z[0-9]+(\.[0-9]+)?$')
@@ -80,7 +80,7 @@ class RecoverClass:
         complete_gcode.close()
 
     def createRecoverFile(self):
-        self.interrupted_line = self.getInterruptedLine()
+        self.getInterruptedLine()
         if(self.interrupted_line >= 0):
             print "Interruption occurred at line {}".format(self.interrupted_line)
         else:
