@@ -39,6 +39,8 @@ class RecoverClass:
             for line in complete_gcode:
                 if(pattern.search(line)):
                     found = True
+                    self.x_interrupted = re.search(r"X[0-9]+(\.[0-9]+)?", line).group()
+                    self.y_interrupted = re.search(r"Y[0-9]+(\.[0-9]+)?", line).group()
                     break
                 else:
                     nb_line = nb_line+1
@@ -68,11 +70,10 @@ class RecoverClass:
 
         recovery_gcode.write("G0 F9000 Z25\n")
         recovery_gcode.write("G92 {}\n".format(self.filament))
+        recovery_gcode.write("G0 F9000 {} {} {}\n".format(self.x_interrupted, self.y_interrupted, self.interrupted_height))
         nb_line = 0
         for line in complete_gcode:
-            if nb_line == self.interrupted_line+1 :
-                recovery_gcode.write("{} {}\n".format(line.strip('\n'), self.interrupted_height))
-            elif nb_line > self.interrupted_line+1 :
+            if nb_line > self.interrupted_line :
                 recovery_gcode.write(line)
             nb_line = nb_line +1
 
@@ -83,12 +84,14 @@ class RecoverClass:
         self.getInterruptedLine()
         if(self.interrupted_line >= 0):
             print "Interruption occurred at line {}".format(self.interrupted_line)
+            print ">> X : ", self.x_interrupted
+            print ">> Y : ", self.y_interrupted
         else:
             print "Interruption line not found, abort"
             return
         self.getHeightAtInterruption()
         if(self.interrupted_height >=0):
-            print "Interruption occurred at height {}".format(self.interrupted_height)
+            print ">> Z : ", self.interrupted_height
         else:
             print "Interruption height not found, abort"
             return
