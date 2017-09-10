@@ -60,7 +60,7 @@ class RecoverClass:
                     nb_line = nb_line+1
                 if nb_line >= self.interrupted_line:
                     break
-        return current_height
+        self.interrupted_height =  current_height
 
     def writeRecoverFile(self, path):
         complete_gcode = open(self.filepath, "r")
@@ -86,7 +86,7 @@ class RecoverClass:
         else:
             print "Interruption line not found, abort"
             return
-        self.interrupted_height = self.getHeightAtInterruption()
+        self.getHeightAtInterruption()
         if(self.interrupted_height >=0):
             print "Interruption occurred at height {}".format(self.interrupted_height)
         else:
