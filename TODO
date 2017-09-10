@@ -1,4 +1,5 @@
 * Add preheat step
 * Add recovery file name choice
-* Improve recovery point : retrieve exact X Y instead of going directly to next
-* line
+* Sometime the provided filament output cannot be found in original GCode
+* (printer provide a real, physical value, while GCode provide an estimated
+* value). If value is not found, get the closest one.
