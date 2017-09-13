@@ -83,27 +83,27 @@ class RecoverClass:
     def createRecoverFile(self):
         self.getInterruptedLine()
         if(self.interrupted_line >= 0):
-            print "Interruption occurred at line {}".format(self.interrupted_line)
-            print ">> X : ", self.x_interrupted
-            print ">> Y : ", self.y_interrupted
+            print("Interruption occurred at line {}".format(self.interrupted_line))
+            print(">> X : {}".format(self.x_interrupted))
+            print(">> Y : {}".format(self.y_interrupted))
         else:
-            print "Interruption line not found, abort"
+            print("Interruption line not found, abort")
             return
         self.getHeightAtInterruption()
         if(self.interrupted_height >=0):
-            print ">> Z : ", self.interrupted_height
+            print(">> Z : {}".format(self.interrupted_height))
         else:
-            print "Interruption height not found, abort"
+            print("Interruption height not found, abort")
             return
 
         recovery_path = "recovery.gcode"
         self.writeRecoverFile("recovery.gcode")
-        print "New G-code file available at {}".format(os.path.abspath(recovery_path))
+        print("New G-code file available at {}".format(os.path.abspath(recovery_path)))
 
 def help_usage():
-    print "Usage : python {} EXXXX FILE".format(sys.argv[0])
-    print "> EXXXX : current filament, example : E187.52"
-    print "> FILE  : the original and complete G-code file"
+    print("Usage : python {} EXXXX FILE".format(sys.argv[0]))
+    print("> EXXXX : current filament, example : E187.52")
+    print("> FILE  : the original and complete G-code file")
 
 if __name__ == "__main__":
     if(len(sys.argv) != 3):
