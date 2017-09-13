@@ -1,13 +1,5 @@
 #!/usr/bin/env python
-#title           :gcode_recover.py
-#description     :Based on last filament output, it will create a new G-code file to resume an interrupted print
-#author          :Alexis Lothore
-#date            :20170909
-#version         :0.1
-#usage           :python gcode_recover.py EXXXXXXX
-#notes           :
-#python_version  :2.7.13
-#==============================================================================
+
 import os
 import sys
 import re
