@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import os
-import sys
 import re
+import argparse
 
 class RecoverException(Exception):
     pass
@@ -92,21 +92,19 @@ class RecoverClass:
         self.writeRecoverFile("recovery.gcode")
         print("New G-code file available at {}".format(os.path.abspath(recovery_path)))
 
-def help_usage():
-    print("Usage : python {} EXXXX FILE".format(sys.argv[0]))
-    print("> EXXXX : current filament, example : E187.52")
-    print("> FILE  : the original and complete G-code file")
 
 if __name__ == "__main__":
-    if(len(sys.argv) != 3):
-        help_usage()
-        exit(1)
-
+    # Add and parse arguments required by the script
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filament_nb", type=str, help="Last filament before stop. Example: E187.52")
+    parser.add_argument("source_file", type=str, help="The original and complete G-code file.")
+    args = parser.parse_args()
+    
     try:
-        recover = RecoverClass(sys.argv[1], sys.argv[2])
+        recover = RecoverClass(args.filament_nb, args.source_file)
     except RecoverException as e:
-        print("Cannot start G-code recovering process : wrong arguments")
-        help_usage()
+        "Cannot start G-code recovering process : wrong arguments ? See --help for info."
+        print(e)
         exit(1)
 
     print("Starting G-code recovering")
