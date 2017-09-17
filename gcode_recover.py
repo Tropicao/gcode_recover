@@ -39,8 +39,8 @@ class RecoverClass:
             for line in complete_gcode:
                 if(pattern.search(line)):
                     found = True
-                    self.x_interrupted = re.search(r"X[0-9]+(\.[0-9]+)?", line).group()
-                    self.y_interrupted = re.search(r"Y[0-9]+(\.[0-9]+)?", line).group()
+                    self.x_interrupted = re.search(r"X-?[0-9]+(\.[0-9]+)?", line).group()
+                    self.y_interrupted = re.search(r"Y-?[0-9]+(\.[0-9]+)?", line).group()
                     break
                 else:
                     nb_line = nb_line+1
