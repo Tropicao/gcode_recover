@@ -68,7 +68,8 @@ class RecoverClass:
         complete_gcode = open(self.filepath, "r")
         recovery_gcode = open(path, "w")
 
-        recovery_gcode.write("G0 F9000 Z25\n")
+        height_before_print = float(self.interrupted_height[1:])+5
+        recovery_gcode.write("G0 F9000 Z{}\n".format(height_before_print))
         recovery_gcode.write("G92 {}\n".format(self.filament))
         recovery_gcode.write("G0 F9000 {} {} {}\n".format(self.x_interrupted, self.y_interrupted, self.interrupted_height))
         nb_line = 0
