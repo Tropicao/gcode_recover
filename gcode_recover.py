@@ -1,16 +1,8 @@
 #!/usr/bin/env python
-#title           :gcode_recover.py
-#description     :Based on last filament output, it will create a new G-code file to resume an interrupted print
-#author          :Alexis Lothore
-#date            :20170909
-#version         :0.1
-#usage           :python gcode_recover.py EXXXXXXX
-#notes           :
-#python_version  :2.7.13
-#==============================================================================
+
 import os
-import sys
 import re
+import argparse
 
 class RecoverException(Exception):
     pass
@@ -84,38 +76,36 @@ class RecoverClass:
     def createRecoverFile(self):
         self.getInterruptedLine()
         if(self.interrupted_line >= 0):
-            print "Interruption occurred at line {}".format(self.interrupted_line)
-            print ">> X : ", self.x_interrupted
-            print ">> Y : ", self.y_interrupted
+            print("Interruption occurred at line {}".format(self.interrupted_line))
+            print(">> X : {}".format(self.x_interrupted))
+            print(">> Y : {}".format(self.y_interrupted))
         else:
-            print "Interruption line not found, abort"
+            print("Interruption line not found, abort")
             return
         self.getHeightAtInterruption()
         if(self.interrupted_height >=0):
-            print ">> Z : ", self.interrupted_height
+            print(">> Z : {}".format(self.interrupted_height))
         else:
-            print "Interruption height not found, abort"
+            print("Interruption height not found, abort")
             return
 
         recovery_path = "recovery.gcode"
         self.writeRecoverFile("recovery.gcode")
-        print "New G-code file available at {}".format(os.path.abspath(recovery_path))
+        print("New G-code file available at {}".format(os.path.abspath(recovery_path)))
 
-def help_usage():
-    print "Usage : python {} EXXXX FILE".format(sys.argv[0])
-    print "> EXXXX : current filament, example : E187.52"
-    print "> FILE  : the original and complete G-code file"
 
 if __name__ == "__main__":
-    if(len(sys.argv) != 3):
-        help_usage()
-        exit(1)
-
+    # Add and parse arguments required by the script
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filament_nb", type=str, help="Last filament before stop. Example: E187.52")
+    parser.add_argument("source_file", type=str, help="The original and complete G-code file.")
+    args = parser.parse_args()
+    
     try:
-        recover = RecoverClass(sys.argv[1], sys.argv[2])
+        recover = RecoverClass(args.filament_nb, args.source_file)
     except RecoverException as e:
-        print("Cannot start G-code recovering process : wrong arguments")
-        help_usage()
+        "Cannot start G-code recovering process : wrong arguments ? See --help for info."
+        print(e)
         exit(1)
 
     print("Starting G-code recovering")
