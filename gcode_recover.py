@@ -83,7 +83,7 @@ class RecoverClass:
             print("Interruption line not found, abort")
             return
         self.getHeightAtInterruption()
-        if(self.interrupted_height >=0):
+        if(float(self.interrupted_height[1:]) >=0):
             print(">> Z : {}".format(self.interrupted_height))
         else:
             print("Interruption height not found, abort")
