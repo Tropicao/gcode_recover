@@ -1,3 +1,7 @@
+* Explain internals (usage of filament output level to retrieve interruption
+* line), add link to initial method, add images
+* Add filament output diameter parameter, to enable warnings on too high
+* approximation on interruption layer
 * Only work with numeric values (eg : 40.17) instead of string ("E40.17")
 * Add preheat step in generated Gcode
 * Add recovery file name choice
