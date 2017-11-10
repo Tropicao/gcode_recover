@@ -1,2 +1,3 @@
 *.gcode
+!test/test_data/pristine_gcode.gcode
 .*un~
