@@ -1,5 +1,6 @@
-* Add preheat step
+* Only work with numeric values (eg : 40.17) instead of string ("E40.17")
+* Add preheat step in generated Gcode
 * Add recovery file name choice
-* Sometime the provided filament output cannot be found in original GCode
-* (printer provide a real, physical value, while GCode provide an estimated
-* value). If value is not found, get the closest one.
+* Sometime the provided filament output cannot be found in original GCode => add
+a search process (printer provide a real, physical value, while GCode provide an estimated
+ value). If value is not found, get the closest one.
