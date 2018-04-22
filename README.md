@@ -20,4 +20,10 @@ Since the electrical wiring is quite old in my apartment, my 3D printer often st
 
 Example : `python gcode_recover.py E4517.904 ~/USBHolder.gcode`
 
-This call, if successfull, will generate file recovery.gcode wich will be able to restart print at interrupted point
+This call, if successfull, will generate file recovery.gcode wich will be able to restart print at interrupted point.
+The script can warn you that it has not found the exact line of failure : this
+is probably because the value of consumed filament and the value really sent to
+printer is not totally the same. Repetier can round/adjust this value before
+sending it to the printer. In case of failure, try to remove a digit to the
+consumption paramter when calling the script, for example, going from E1991.178
+to E1991.17. This issue will be fixed in a later development.
